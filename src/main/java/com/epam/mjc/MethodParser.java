@@ -24,8 +24,8 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
-        String[] parts = signatureString.split("[()]");
-        String[] nonArgumentValues = parts[0].split(" ");
+        StringTokenizer tokenizer = new StringTokenizer(signatureString, "()");
+        String[] nonArgumentValues = tokenizer.nextToken().split(" ");
 
         String accessModifier = null;
         String returnType;
@@ -41,8 +41,8 @@ public class MethodParser {
             methodName = nonArgumentValues[2];
         }
 
-        if (parts.length > 1) {
-            StringTokenizer paramsInsideParenthesis = new StringTokenizer(parts[1], " ,");
+        if (tokenizer.hasMoreTokens()) {
+            StringTokenizer paramsInsideParenthesis = new StringTokenizer(tokenizer.nextToken(), " ,");
             while (paramsInsideParenthesis.hasMoreTokens()) {
                 String type = paramsInsideParenthesis.nextToken();
                 String name = paramsInsideParenthesis.nextToken();
